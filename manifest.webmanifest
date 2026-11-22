@@ -1,7 +1,7 @@
 {
-  "name": "The Night Observatory",
-  "short_name": "The Night Observatory",
-  "description": "A hand-drawn H5 puzzle platformer about impact, light and gravity.",
+  "name": "Astrofall Observatory",
+  "short_name": "Astrofall",
+  "description": "A 60-room story-driven puzzle platformer.",
   "lang": "en",
   "start_url": "./",
   "scope": "./",

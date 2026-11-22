@@ -1,29 +1,26 @@
-# The Night Observatory
+# Astrofall Observatory
 
-A browser puzzle platformer about landing impact, light, and gravity. The full edition has 38 rooms, three wings, eight echoes, and three endings. It is based on the Night Observatory prototype supplied by the site owner.
+The beacon is dark and the cloud sea has stopped moving. The watchman wakes on a fogbound shore and follows the old workshop, moon mirrors, and belfry to learn why the last light went out.
 
-- [Play the full edition](https://frostmoonrui.com/en/play/astrofall/)
-- [Play the 16-room classic edition](https://frostmoonrui.com/en/play/astrofall/classic/)
+**[Play Astrofall Observatory](https://frostmoonrui.com/en/play/astrofall/)**
 
-## Run locally
-
-Start a static server from this directory. The game has no build step or external assets.
-
-    python -m http.server 8000 --bind 127.0.0.1
-
-Open http://127.0.0.1:8000/. The classic version is also available from classic/index.html.
+One campaign connects the original Astrofall and Night Observatory rooms. It has 60 rooms, three endings, eight optional echoes, and 16 restorations. Landing impact, light, gravity, and springs carry from one wing to the next. The star map records repaired mechanisms, and wing sigils open shortcuts back to Nightwatch Hall.
 
 ## Controls and saves
 
-- Move with the arrow keys or A/D, jump with Space, brace with Down, S, or Shift, and interact with E or Enter.
-- Phones support a touch joystick, separate jump and brace buttons, and fullscreen where the browser permits it.
-- Choose Chinese, English, Russian, or Japanese. The layered hints are available in the pause menu.
-- The full edition saves to three browser slots. Export a file or copy a code from the pause menu and import it in Settings. The classic edition uses its own saves.
+- Move with the arrow keys or A/D. Jump with Space, brace with S, Down, or Shift, and interact with E or Enter.
+- Phones support a joystick and separate jump and brace buttons. Fullscreen is available where the browser permits it.
+- Choose Chinese, English, Russian, or Japanese. Reveal hints one layer at a time.
+- Three slots save automatically. Export from Pause and import a file or code in Settings. Night Observatory saves retain their progress. Classic saves resume at the corresponding room and carry over discovered rooms.
 
-## Verify the game
+## Run and verify locally
 
-Run the route test:
+Serve this checkout and open http://127.0.0.1:8000/.
+
+    python -m http.server 8000 --bind 127.0.0.1
+
+Run the route tests separately.
 
     node --test tests/night-observatory.test.mjs
 
-The recorded input sequences start in Nightwatch Hall with an empty save, solve the three wings using the game physics, and check both ordinary endings and the hidden ending.
+The tests start on the fogbound shore with an empty save and replay ordinary inputs. Both ordinary endings are tested. The hidden route visits all 60 rooms, collects all eight echoes, and records all 16 restorations.
