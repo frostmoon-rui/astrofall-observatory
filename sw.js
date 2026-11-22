@@ -1,7 +1,7 @@
 /* Offline cache isolated to this game and locale. */
 const scope = self.registration.scope;
 const prefix = 'night-observatory:' + scope + ':';
-const cacheName = prefix + '3e863f42cc6a';
+const cacheName = prefix + '4c1b8eff1bf1';
 const assetPaths = ["./assets/icons/favicon-32.png","./assets/icons/apple-touch-icon.png","./assets/style.css","./assets/js/i18n.js","./assets/js/data.js","./assets/js/campaign.js","./assets/js/audio.js","./assets/js/engine.js","./assets/js/ui.js","./assets/js/main.js"];
 const assetURLs = new Set(assetPaths.map(asset => new URL(asset, scope).href));
 const shell = new URL('./', scope).href;
