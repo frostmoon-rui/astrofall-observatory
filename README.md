@@ -1,24 +1,29 @@
-# Astrofall Observatory · 星坠天文台
+# The Night Observatory
 
-Astrofall Observatory is a browser puzzle platformer about landing impact and discovering new uses for familiar rules. The public playtest includes 16 rooms. The route from the porch through the workshop and back to the cracked glass has been tested end to end.
+A browser puzzle platformer about landing impact, light, and gravity. The full edition has 38 rooms, three wings, eight echoes, and three endings. It is based on the Night Observatory prototype supplied by the site owner.
 
-**[Play the public test](https://frostmoonrui.com/zh/notes/astrofall-playtest/)**
+- [Play the full edition](https://frostmoonrui.com/en/play/astrofall/)
+- [Play the 16-room classic edition](https://frostmoonrui.com/en/play/astrofall/classic/)
 
 ## Run locally
 
-Open `index.html` in a browser, or serve this directory:
+Start a static server from this directory. The game has no build step or external assets.
 
-```sh
-python -m http.server 8000 --bind 127.0.0.1
-```
+    python -m http.server 8000 --bind 127.0.0.1
 
-Then visit `http://127.0.0.1:8000/`. The game is a single HTML file with no build step or external assets.
+Open http://127.0.0.1:8000/. The classic version is also available from classic/index.html.
 
 ## Controls and saves
 
-- Move with the arrow keys or A/D. Press Space to jump and E to interact.
-- On a phone, turn the screen sideways and use the fullscreen and touch controls. Settings let you swap the controls or change their size.
-- Use the hint button to reveal clues one layer at a time. The game supports Chinese, English, Russian, and Japanese.
-- Progress is saved in your browser. To carry progress between the hosted playtest and a local copy, export a save code from Settings and import it in the other copy.
+- Move with the arrow keys or A/D, jump with Space, brace with Down, S, or Shift, and interact with E or Enter.
+- Phones support a touch joystick, separate jump and brace buttons, and fullscreen where the browser permits it.
+- Choose Chinese, English, Russian, or Japanese. The layered hints are available in the pause menu.
+- The full edition saves to three browser slots. Export a file or copy a code from the pause menu and import it in Settings. The classic edition uses its own saves.
 
-When reporting a bug, include the room, device or browser, and the steps that led to it.
+## Verify the game
+
+Run the route test:
+
+    node --test tests/night-observatory.test.mjs
+
+The recorded input sequences start in Nightwatch Hall with an empty save, solve the three wings using the game physics, and check both ordinary endings and the hidden ending.
