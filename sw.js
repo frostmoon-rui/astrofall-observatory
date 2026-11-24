@@ -1,8 +1,8 @@
 /* Offline cache isolated to this game and locale. */
 const scope = self.registration.scope;
 const prefix = 'night-observatory:' + scope + ':';
-const cacheName = prefix + '5103971edb14';
-const assetPaths = ["./assets/icons/favicon-32.png","./assets/icons/apple-touch-icon.png","./assets/style.css","./assets/js/i18n.js","./assets/js/data.js","./assets/js/campaign.js","./assets/js/audio.js","./assets/js/engine.js","./assets/js/tutorial.js","./assets/js/ui.js","./assets/js/main.js"];
+const cacheName = prefix + '0221c4406254';
+const assetPaths = ["./assets/icons/favicon-32.png","./assets/icons/apple-touch-icon.png","./assets/style.css","./assets/js/i18n.js","./assets/js/data.js","./assets/js/campaign.js","./assets/js/room-layouts.js","./assets/js/audio.js","./assets/js/engine.js","./assets/js/tutorial.js","./assets/js/ui.js","./assets/js/main.js"];
 const assetURLs = new Set(assetPaths.map(asset => new URL(asset, scope).href));
 const shell = new URL('./', scope).href;
 const manifest = new URL('./manifest.webmanifest', scope).href;
