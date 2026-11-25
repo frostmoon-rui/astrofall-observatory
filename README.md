@@ -1,26 +1,21 @@
 # Astrofall Observatory
 
-The beacon is dark and the cloud sea has stopped moving. The watchman wakes on a fogbound shore and follows the old workshop, moon mirrors, and belfry to learn why the last light went out.
+A night attendant returns to a quiet observatory and follows the brass conduits through 25 interconnected rooms. A light step, a normal jump, and a long fall have different effects. Try them in the porch, then carry what you learn into the workshop, moonlit archive, belfry, and wells. Four cores restore the astrolabe. Four optional fragments reveal a second ending.
 
 **[Play Astrofall Observatory](https://frostmoonrui.com/en/play/astrofall/)**
 
-One campaign connects the original Astrofall and Night Observatory rooms. It has 60 rooms, three endings, eight optional echoes, and 16 restorations. Landing impact, light, gravity, and springs carry from one wing to the next. The star map records repaired mechanisms, and wing sigils open shortcuts back to Nightwatch Hall.
+Move with A/D or the arrow keys, jump with Space, and interact with E. Press R to restart the room, or M to open the map. Phones can use separate direction, jump, and interact buttons with two fingers. The game offers four languages, layered hints, and adjustable touch controls and audio.
 
-## Controls and saves
+Progress saves automatically. Export a code in Settings to transfer this edition across devices. Earlier editions use separate browser save keys because their room and puzzle layouts differ.
 
-- Move with the arrow keys or A/D. Jump with Space, brace with S, Down, or Shift, and interact with E or Enter.
-- Phones support a joystick and separate jump and brace buttons. Fullscreen is available where the browser permits it.
-- Choose Chinese, English, Russian, or Japanese. Reveal hints one layer at a time.
-- Three slots save automatically. Export from Pause and import a file or code in Settings. Night Observatory saves retain their progress. Classic saves resume at the corresponding room and carry over discovered rooms.
+## Run locally
 
-## Run and verify locally
-
-Serve this checkout and open http://127.0.0.1:8000/.
+From this checkout, run:
 
     python -m http.server 8000 --bind 127.0.0.1
 
-Run the route tests separately.
+Open http://127.0.0.1:8000/. The game uses Canvas and Web Audio without external runtime dependencies.
 
-    node --test tests/night-observatory.test.mjs
+    node --test tests/exploration.test.mjs
 
-The tests start on the fogbound shore with an empty save and replay ordinary inputs. Both ordinary endings are tested. The hidden route visits all 60 rooms, collects all eight echoes, and records all 16 restorations.
+The replays use the gameplay engine with timed movement, jump, and interaction inputs. One route reaches the ordinary ending, and the other visits all 25 rooms and reaches the hidden ending.

@@ -1,7 +1,7 @@
 {
   "name": "Astrofall Observatory",
   "short_name": "Astrofall",
-  "description": "A 60-room story-driven puzzle platformer.",
+  "description": "Explore 25 connected rooms through landing impact, light, and momentum.",
   "lang": "en",
   "start_url": "./",
   "scope": "./",
