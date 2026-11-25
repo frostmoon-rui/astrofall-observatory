@@ -3,12 +3,13 @@ import {readFile} from 'node:fs/promises';
 import {randomUUID} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import {WebSocketServer, WebSocket} from 'ws';
-import {createArena, MAX_PLAYERS} from './arena.mjs';
+import {createArena, MAX_PLAYERS, TICK} from './arena.mjs';
 
 const files = new Map(Object.entries({
   '/': ['index.html','text/html; charset=utf-8'],
   '/co-op/': ['co-op/index.html','text/html; charset=utf-8'],
   '/co-op/client.mjs': ['co-op/client.mjs','text/javascript; charset=utf-8'],
+  '/co-op/motion.mjs': ['co-op/motion.mjs','text/javascript; charset=utf-8'],
   '/co-op/arena.mjs': ['co-op/arena.mjs','text/javascript; charset=utf-8'],
   '/co-op/style.css': ['co-op/style.css','text/css; charset=utf-8'],
   '/assets/exploration/game.css': ['assets/exploration/game.css','text/css; charset=utf-8'],
@@ -93,12 +94,12 @@ export function createGameServer() {
   const timer=setInterval(()=>{
     frame++;
     for (const {arena,peers} of rooms.values()) {
-      arena.step(1/30);
+      arena.step(TICK);
       if (frame%2) continue;
       const payload=JSON.stringify(arena.snapshot());
       for (const ws of peers) if (ws.readyState===WebSocket.OPEN && ws.bufferedAmount<32768) ws.send(payload);
     }
-  },1000/30);
+  },1000*TICK);
   http.on('close',()=>{clearInterval(timer);clearInterval(heartbeat);sockets.close();});
   return http;
 }
