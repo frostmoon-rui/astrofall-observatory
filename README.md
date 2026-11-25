@@ -19,3 +19,7 @@ Open http://127.0.0.1:8000/. The game uses Canvas and Web Audio without external
     node --test tests/exploration.test.mjs
 
 The replays use the gameplay engine with timed movement, jump, and interaction inputs. One route reaches the ordinary ending, and the other visits all 25 rooms and reaches the hidden ending.
+
+## Project notes
+
+- [Playtest notes and controls](https://frostmoonrui.com/en/notes/astrofall-playtest/)
