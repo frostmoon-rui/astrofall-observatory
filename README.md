@@ -1,24 +1,36 @@
 # Astrofall Observatory
 
-A night attendant returns to a quiet observatory and follows the brass conduits through 25 interconnected rooms. A light step, a normal jump, and a long fall have different effects. Try them in the porch, then carry what you learn into the workshop, moonlit archive, belfry, and wells. Four cores restore the astrolabe. Four optional fragments reveal a second ending.
+A night attendant restores a silent observatory by mastering landing impact, phase, and momentum. The solo campaign has 80 connected rooms. The original 25 form the central map, and 11 new sectors branch into 55 circuitry, traversal, and timing rooms. Each sector forks, recombines, and opens a shortcut back to the rotunda.
+
+Four star cores and the Foundry, Mirror, Viaduct, and Cavern seals open the dome. The hidden ending needs four stardust fragments and every sector seal, including the ring off the dome. Completed circuits stay unlocked on return visits.
 
 **[Play Astrofall Observatory](https://frostmoonrui.com/en/play/astrofall/)**
 
 Move with A/D or the arrow keys, jump with Space, and interact with E. Press R to restart the room, or M to open the map. Phones can use separate direction, jump, and interact buttons with two fingers. The game offers four languages, layered hints, and adjustable touch controls and audio.
 
-Progress saves automatically. Export a code in Settings to transfer this edition across devices. Earlier editions use separate browser save keys because their room and puzzle layouts differ.
+Progress saves automatically. Export a code in Settings to transfer this edition across devices. Saves from the 25-room build retain the original room progress. The added sectors start unexplored.
+
+## Online co-op
+
+[Join the public playtest](https://frostmoonrui.com/play/astrofall/co-op/) or run the local server. Pick a mode and share the room code or invite link. One to six players can enter mid-game. Co-op has a separate map and leaves solo saves independent.
+
+- **Constellation Relay** spans nine scrolling sectors. Stand at numbered doors, activate relay stations in turn, and hold Link with a partner of the opposite phase to bridge gaps or boost jumps. Doors track the active roster. Mid-game arrivals start at the shared checkpoint.
+- **Endless Run** streams course segments ahead of each runner. Race for distance or play alongside friends. Falling returns the runner to their most recent checkpoint.
+
+Use A/D or the arrows, Space to jump, E to link, and F to act. Phones have separate multitouch controls.
 
 ## Run locally
 
-From this checkout, run:
+Requires Node.js 20+ for online rooms.
 
-    python -m http.server 8000 --bind 127.0.0.1
+    npm ci
+    npm run dev
 
-Open http://127.0.0.1:8000/. The game uses Canvas and Web Audio without external runtime dependencies.
+Open http://127.0.0.1:8789/ for solo or http://127.0.0.1:8789/co-op/ for co-op. The server binds to loopback by default. The hosted website uses the same game rules in a Cloudflare Durable Object. The solo game can also be served with any static server.
 
-    node --test tests/exploration.test.mjs
+    npm test
 
-The replays use the gameplay engine with timed movement, jump, and interaction inputs. One route reaches the ordinary ending, and the other visits all 25 rooms and reaches the hidden ending.
+Tests replay all 55 added circuits with movement, jump and interaction inputs, verify the original routes, and exercise real WebSocket joins and departures.
 
 ## Project notes
 

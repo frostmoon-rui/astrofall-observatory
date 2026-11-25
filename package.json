@@ -1,0 +1,13 @@
+{
+  "name": "astrofall-observatory",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node co-op/server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "ws": "8.23.0"
+  }
+}
