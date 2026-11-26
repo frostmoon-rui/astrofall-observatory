@@ -97,3 +97,23 @@ test('real WebSocket clients join during play and disconnect without restarting 
     await new Promise(resolve=>server.close(resolve));
   }
 });
+
+test('relay stations accept rapid interaction in player order and report readiness',()=>{
+  const arena=createArena('relay',{checkpoint:2});
+  for(const id of ['first','second']) arena.join(id);
+  reachPlate(arena,'first',2,0,2);
+  reachPlate(arena,'second',2,1,2);
+  assert.deepEqual(arena.snapshot().relayStations,[true,true]);
+  function tap(id){
+    arena.input(id,{act:true});
+    arena.input(id,{act:false});
+    tick(arena,1);
+  }
+  tap('second');
+  assert.equal(arena.snapshot().relayStep,0);
+  tap('first');
+  assert.equal(arena.snapshot().relayStep,1);
+  assert.ok(arena.snapshot().relayTime>0);
+  tap('second');
+  assert.equal(arena.snapshot().checkpoint,3);
+});
