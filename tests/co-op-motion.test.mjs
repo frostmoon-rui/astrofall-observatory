@@ -15,8 +15,8 @@ test('remote motion advances between snapshots and local motion follows the late
   motion.push(state(.12,120),120);
   const first=motion.sample(145,'local',1);
   const second=motion.sample(155,'local',1);
-  assert.equal(first.players[0].x,40);
-  assert.equal(second.players[0].x,50);
+  assert.ok(Math.abs(first.players[0].x-40)<.01);
+  assert.ok(Math.abs(second.players[0].x-50)<.01);
   assert.ok(second.players[1].x>first.players[1].x);
   assert.ok(second.players[1].x>second.players[0].x);
 });

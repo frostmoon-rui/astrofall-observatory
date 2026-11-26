@@ -16,6 +16,8 @@ Progress saves automatically. Export a code in Settings to transfer this edition
 
 - **Constellation Relay** spans nine scrolling sectors. Stand at numbered doors, activate relay stations in turn, and hold Link with a partner of the opposite phase to bridge gaps or boost jumps. Doors track the active roster. Mid-game arrivals start at the shared checkpoint.
 - **Endless Run** streams course segments ahead of each runner. Race for distance or play alongside friends. Falling returns the runner to their most recent checkpoint.
+- **Jump Race** keeps the legacy double jump and gives everyone the same obstacles. Compare round scores and join an active room without starting a separate course.
+- **Platform Co-op** uses the eight legacy stages, shared checkpoints, ordered switches, and partner boosts. Reach the flag with the whole party to advance. The original single-player games keep their own saves.
 
 Use A/D or the arrows, Space to jump, E to link, and F to act. Phones have separate multitouch controls.
 
