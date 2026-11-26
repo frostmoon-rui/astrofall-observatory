@@ -105,8 +105,8 @@ test('relay stations accept rapid interaction in player order and report readine
   reachPlate(arena,'second',2,1,2);
   assert.deepEqual(arena.snapshot().relayStations,[true,true]);
   function tap(id){
-    arena.input(id,{act:true});
-    arena.input(id,{act:false});
+    arena.input(id,{act:false,action:1});
+    arena.input(id,{act:false,action:1});
     tick(arena,1);
   }
   tap('second');
@@ -114,6 +114,27 @@ test('relay stations accept rapid interaction in player order and report readine
   tap('first');
   assert.equal(arena.snapshot().relayStep,1);
   assert.ok(arena.snapshot().relayTime>0);
-  tap('second');
+  arena.input('second',{act:false,action:1});
+  tick(arena,1);
+  assert.equal(arena.snapshot().relayStep,1);
+  arena.input('second',{act:false,action:2});
+  tick(arena,1);
   assert.equal(arena.snapshot().checkpoint,3);
+});
+
+test('linked players can cross the rendered light bridge without jumping',()=>{
+  const arena=createArena('relay');
+  arena.join('left');arena.join('right');
+  for(let frame=0;frame<43;frame++){
+    for(const id of ['left','right']) arena.input(id,{link:true,axis:1});
+    tick(arena,1);
+    if(frame===20){
+      assert.equal(arena.snapshot().bridge,true);
+      assert.equal(position(arena,'left').linked,true);
+    }
+  }
+  for(const p of arena.snapshot().players){
+    assert.ok(p.x>360 && p.ground);
+    assert.equal(p.spawnId,1);
+  }
 });
