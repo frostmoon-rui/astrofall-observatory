@@ -126,12 +126,13 @@ test('packets between painted frames do not change steady movement speed',()=>{
   arena.join('local');
   const motion=createMotion();
   const ctrl={axis:1,jump:false,link:false};
-  motion.push(arena.snapshot(),0,'local');
-  motion.control(ctrl,0);
-  motion.sample(0,'local');
+  const start=1000;
+  motion.push(arena.snapshot(),start,'local');
+  motion.control(ctrl,start);
+  motion.sample(start,'local');
   let before=42;
   for(let tick=1;tick<=30;tick++){
-    const time=tick*10;
+    const time=start+tick*10;
     if(tick%3===0){
       motion.track(tick,time-5);
       arena.input('local',{...ctrl,seq:tick});
