@@ -120,3 +120,26 @@ test('predicted fall shows waiting even when the server confirmation is delayed'
   assert.equal(view.players[0].spawnId,1);
   for(let now=42;now<1200;now+=16) assert.ok(motion.sample(now,'local').players[0].respawnAt>0);
 });
+
+test('packets between painted frames do not change steady movement speed',()=>{
+  const arena=createArena('relay');
+  arena.join('local');
+  const motion=createMotion();
+  const ctrl={axis:1,jump:false,link:false};
+  motion.push(arena.snapshot(),0,'local');
+  motion.control(ctrl,0);
+  motion.sample(0,'local');
+  let before=42;
+  for(let tick=1;tick<=30;tick++){
+    const time=tick*10;
+    if(tick%3===0){
+      motion.track(tick,time-5);
+      arena.input('local',{...ctrl,seq:tick});
+      arena.step(.03);
+      motion.push(arena.snapshot(),time-2,'local');
+    }
+    const x=motion.sample(time,'local').players[0].x;
+    assert.ok(Math.abs(x-before-2.44)<.32,JSON.stringify({x,before,time}));
+    before=x;
+  }
+});
