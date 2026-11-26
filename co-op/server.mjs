@@ -44,14 +44,20 @@ export function createGameServer() {
     }
   });
   http.on('upgrade',(request,socket,head) => {
-    const target = /^\/co-op\/socket\/(relay|runner|jump|platform|gravity|tanks|brawl|comets)\/([a-z0-9-]{3,24})$/.exec(request.url || '');
+    const target = /^\/co-op\/socket\/(relay|runner|jump|platform|gravity|tanks|brawl|comets)\/([a-z0-9-]{3,24})$/.exec(request.url?.split('?')[0] || '');
     const origin = request.headers.origin;
     if (!target || (origin && origin !== 'https://'+request.headers.host && origin !== 'http://'+request.headers.host)) {
       socket.end('HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n');
       return;
     }
     const [,mode,code] = target;
-    const key = mode+'/'+code;
+    const query=new URLSearchParams(request.url.split('?')[1]);
+    const region=query.get('region');
+    if(region!==null && region!=='apac'){
+      socket.end('HTTP/1.1 400 Bad Request\r\nConnection: close\r\n\r\n');
+      return;
+    }
+    const key = (region==='apac'?'apac-ne/':'')+mode+'/'+code;
     let room=rooms.get(key);
     if ((!room && rooms.size>=40) || room?.arena.size>=getRoomCapacity(mode)) {
       socket.end('HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\n\r\n');
