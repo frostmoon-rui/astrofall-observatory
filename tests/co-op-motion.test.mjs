@@ -77,3 +77,46 @@ test('prediction stays blocked at unopened gates and the server owns checkpoints
     assert.equal(render.state.checkpoint,0);
   }
 });
+
+test('a runner recovers once, after the countdown, without freezing the room',()=>{
+  const arena=createArena('runner');
+  arena.join('local');
+  arena.join('remote');
+  let falling, advancing, partnerJumped=false;
+  for(let tick=0;tick<100;tick++){
+    arena.step(TICK);
+    [falling,advancing]=arena.snapshot().players;
+    if(!partnerJumped && advancing.x>219){
+      arena.input('remote',{axis:1,jump:true});
+      partnerJumped=true;
+    }
+    if(falling.respawnAt!=null) break;
+  }
+  assert.ok(falling.respawnAt>0);
+  const old=falling, partnerX=advancing.x;
+  arena.input('local',{axis:1,jump:true,seq:2});
+  for(let tick=0;tick<15;tick++) arena.step(TICK);
+  [falling,advancing]=arena.snapshot().players;
+  assert.equal(falling.x,old.x);
+  assert.equal(falling.spawnId,old.spawnId);
+  assert.equal(falling.ack,2);
+  assert.ok(advancing.respawnAt==null && advancing.x>partnerX);
+  for(let tick=0;tick<15;tick++) arena.step(TICK);
+  const [reset]=arena.snapshot().players;
+  assert.equal(reset.respawnAt,null);
+  assert.equal(reset.spawnId,old.spawnId+1);
+  assert.ok(reset.ground && reset.x>=42 && reset.x<85);
+});
+
+test('predicted fall shows waiting even when the server confirmation is delayed',()=>{
+  const arena=createArena('runner');
+  arena.join('local');
+  const state=arena.snapshot();
+  Object.assign(state.players[0],{x:280,y:580,vy:700,ground:false});
+  const motion=createMotion();
+  motion.push(state,10,'local');
+  const view=motion.sample(26,'local');
+  assert.ok(view.players[0].respawnAt>0);
+  assert.equal(view.players[0].spawnId,1);
+  for(let now=42;now<1200;now+=16) assert.ok(motion.sample(now,'local').players[0].respawnAt>0);
+});
