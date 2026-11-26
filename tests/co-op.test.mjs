@@ -138,3 +138,23 @@ test('linked players can cross the rendered light bridge without jumping',()=>{
     assert.equal(p.spawnId,1);
   }
 });
+
+test('numbered Link gate waits for every player before opening',()=>{
+  const arena=createArena('relay',{checkpoint:1});
+  arena.join('one');
+  arena.join('two');
+  reachPlate(arena,'one',1,0,2);
+  reachPlate(arena,'two',1,1,2);
+  assert.deepEqual(arena.snapshot().relayStations,[true,true]);
+  assert.equal(arena.snapshot().linkGate,true);
+  arena.input('two',{link:true});
+  tick(arena,18);
+  assert.equal(arena.snapshot().hold,0);
+  arena.input('one',{link:true});
+  arena.input('two',{link:true});
+  tick(arena,9);
+  assert.ok(arena.snapshot().hold>.25);
+  arena.input('two',{link:true});
+  tick(arena,12);
+  assert.equal(arena.snapshot().checkpoint,2);
+});
