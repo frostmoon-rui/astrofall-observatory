@@ -3,14 +3,14 @@ import {readFile} from 'node:fs/promises';
 import {randomUUID} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import {WebSocketServer, WebSocket} from 'ws';
-import {createArena, MAX_PLAYERS, TICK} from './arena.mjs';
+import {createArena, getRoomCapacity, TICK} from './arena.mjs';
 
 const files = new Map(Object.entries({
   '/': ['index.html','text/html; charset=utf-8'],
   '/co-op/': ['co-op/index.html','text/html; charset=utf-8'],
   '/co-op/client.mjs': ['co-op/client.mjs','text/javascript; charset=utf-8'],
   '/co-op/motion.mjs': ['co-op/motion.mjs','text/javascript; charset=utf-8'],
-  ...Object.fromEntries(['legacy-arena','legacy-platform-levels','legacy-render'].map(name=>
+  ...Object.fromEntries(['legacy-arena','legacy-platform-levels','legacy-render','expansion-arena','expansion-maps','expansion-render'].map(name=>
     ['/co-op/'+name+'.mjs',['co-op/'+name+'.mjs','text/javascript; charset=utf-8']])),
   '/co-op/arena.mjs': ['co-op/arena.mjs','text/javascript; charset=utf-8'],
   '/co-op/style.css': ['co-op/style.css','text/css; charset=utf-8'],
@@ -44,7 +44,7 @@ export function createGameServer() {
     }
   });
   http.on('upgrade',(request,socket,head) => {
-    const target = /^\/co-op\/socket\/(relay|runner|jump|platform)\/([a-z0-9-]{3,24})$/.exec(request.url || '');
+    const target = /^\/co-op\/socket\/(relay|runner|jump|platform|gravity|tanks|brawl|comets)\/([a-z0-9-]{3,24})$/.exec(request.url || '');
     const origin = request.headers.origin;
     if (!target || (origin && origin !== 'https://'+request.headers.host && origin !== 'http://'+request.headers.host)) {
       socket.end('HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n');
@@ -53,7 +53,7 @@ export function createGameServer() {
     const [,mode,code] = target;
     const key = mode+'/'+code;
     let room=rooms.get(key);
-    if ((!room && rooms.size>=40) || room?.arena.size>=MAX_PLAYERS) {
+    if ((!room && rooms.size>=40) || room?.arena.size>=getRoomCapacity(mode)) {
       socket.end('HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\n\r\n');
       return;
     }
